@@ -1,0 +1,450 @@
+﻿@model IEnumerable<MVCHotel.Models.Reservation>
+
+@{
+    ViewData["Title"] = "Index";
+    var currentName = ViewBag.name as string;
+}
+
+
+<style>
+    body {
+        background-color: whitesmoke;
+    }
+
+    th {
+        background-color: lightgrey !important;
+    }
+
+    #searchPage {
+        display: block !important;
+        margin: 0.3vw auto 0.7vw !important;
+        width: 17vw;
+    }
+
+    #search-btn {
+        background-color: gold;
+        font-weight:bold;
+        transition: 0.1s;
+    }
+
+    #search-btn:hover {
+            background-color: rgb(250, 205, 0);
+    }
+
+    /* #search { */
+    /*     border-color: black; */
+    /* } */
+
+    /* .pagination .page-item.active .page-link { */
+    /*     background-color: #007bff; */
+    /*     border-color: #007bff; */
+    /*     color: white; */
+    /* } */
+
+    /* .pagination .page-item .page-link { */
+    /*     color: #007bff; */
+    /* } */
+</style>
+
+
+<h1 class="text-center mb-5">Hotel Reservations Pagination Test</h1>
+
+<div class="mb-3 d-flex align-items-center">
+    <form asp-action="CreateBogusData" method="post">
+        <input type="submit" id="bogus" value="Create Bogus Data" class="btn btn-primary px-5 me-2">
+    </form>
+    
+    <form asp-action="DeleteAll" method="post">
+        <input type="submit" id="delete-all" value="Delete All" class="btn btn-danger px-5 me-3">
+    </form>
+
+    <span class="ms-auto fs-3">Number of Records: <strong>@(ViewBag?.RecordCounts ?? 0)</strong></span>
+</div>
+
+
+<p>
+    <a asp-action="Create" class="btn btn-info" style="padding: 3px 94px; font-weight: bold;">Add Reservation</a>
+    <a asp-action="Index" class="btn btn-outline-primary fw-bold">Refresh</a>
+</p>
+
+
+<div class="text-center my-4">
+    <form asp-action="Search" method="get">
+        <input type="text" id="search" name="name" value="@ViewBag?.name" class="form-control w-25 d-inline mx-1" placeholder="search"/>
+        <input id="search-btn" type="submit" value="Search" class="btn px-4 fw-bold">
+    </form>
+</div>
+
+
+
+<table class="table table-bordered table-hover text-center mb-4">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BirthDay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberGuest)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StreetAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AptSuite)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ZipCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomFloor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalBill)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaymentType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CardType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CardNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CardExp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CardCvc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArrivalTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LeavingTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CheckIn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BreakFast)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lunch)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dinner)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cleaning)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Towel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SSurprise)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupplyStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FoodBill)
+            </th>
+            <th>Operations</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BirthDay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberGuest)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StreetAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AptSuite)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.State)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ZipCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomFloor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalBill)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaymentType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CardType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CardNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CardExp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CardCvc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArrivalTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LeavingTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CheckIn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BreakFast)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lunch)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dinner)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cleaning)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Towel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SSurprise)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupplyStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FoodBill)
+            </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary px-5 my-2">Details</a> |
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success px-5">Edit</a> |
+                    @* <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger px-5 px-5 my-2">Delete</a> *@
+
+                    <form method="post" asp-action="Delete" class="delete" asp-route-id="@item.Id">
+                        <button type="submit" class="btn btn-danger px-5 my-2">Delete</button>
+                    </form>
+                </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
+
+<div class="mt-4 text-center">
+    @if (ViewBag.TotalPages > 1)
+    {
+        <nav>
+            <ul class="pagination justify-content-center">
+                <!-- First Page -->
+                @if (ViewBag.CurrentPage > 3)
+                {
+                    <li class="page-item">
+                        @{
+                            var firstRoute = new Dictionary<string, string> { { "pageNumber", "1" } };
+                            if (currentName != null) firstRoute.Add("name", currentName);
+                        }
+                        <a class="page-link"
+                           asp-action="@(currentName != null ? "Search" : "Index")"
+                           asp-all-route-data="firstRoute">1</a>
+                    </li>
+                    <li class="page-item disabled"><span class="page-link">...</span></li>
+                }
+
+                <!-- Page Numbers -->
+                @for (int i = Math.Max(1, ViewBag.CurrentPage - 4); i <= Math.Min(ViewBag.TotalPages, ViewBag.CurrentPage + 4); i++)
+                {
+                    <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                        @{
+                            var pageRoute = new Dictionary<string, string> { { "pageNumber", i.ToString() } };
+                            if (currentName != null) pageRoute.Add("name", currentName);
+                        }
+                        <a class="page-link"
+                           asp-action="@(currentName != null ? "Search" : "Index")"
+                           asp-all-route-data="pageRoute">@i</a>
+                    </li>
+                }
+
+                <!-- Last Page -->
+                @if (ViewBag.CurrentPage < ViewBag.TotalPages - 2)
+                {
+                    <li class="page-item disabled"><span class="page-link">...</span></li>
+                    <li class="page-item">
+                        @{
+                            var lastRoute = new Dictionary<string, string> { { "pageNumber", ViewBag.TotalPages.ToString() } };
+                            if (currentName != null) lastRoute.Add("name", currentName);
+                        }
+                        <a class="page-link"
+                           asp-action="@(currentName != null ? "Search" : "Index")"
+                           asp-all-route-data="lastRoute">@ViewBag.TotalPages</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    }
+</div>
+
+
+<form id="pages-form" asp-action="@(currentName != null ? "Search" : "Index")" method="get">
+    @if (currentName != null)
+    {
+        <input type="hidden" name="name" value="@currentName" />
+    }
+    <div class="text-center">
+        <label for="searchPage">Search Page Number</label>
+        <input type="number" id="searchPage" name="pageNumber" value="@ViewBag.CurrentPage" class="form-control d-inline mx-1" />
+        <button type="submit" class="btn btn-primary">Go</button>
+    </div>
+</form>
+
+
+
+<script>
+    document.getElementById("bogus").addEventListener("click", (event) => {
+    var msg = confirm("Are you sure you want to create fake data? (10000 Records)");
+
+    if(msg == false)
+        event.preventDefault();
+    });
+
+
+    document.getElementById("delete-all").addEventListener("click", (event) => {
+    var msg = confirm("Are you sure you want to delete all data?");
+
+    if(msg == false)
+        event.preventDefault();
+    });
+
+
+    document.querySelectorAll(".delete").forEach(button => {
+        button.addEventListener("click", (event) => {
+            var msg = confirm("Are you sure you want to delete this record?");
+            if (!msg) {
+                event.preventDefault();
+            }
+        });
+    });
+
+
+    document.getElementById("pages-form").addEventListener("submit", (event) => {
+        const pageInput = document.getElementById("searchPage").value;
+        const totalPages = @ViewBag.TotalPages;
+
+        if (isNaN(pageInput) || pageInput < 1 || pageInput > totalPages) {
+            alert("Page Not Found");
+            event.preventDefault();
+        }
+    });
+</script>
+
+
+<script>                                        @* change, input, blur *@
+    document.getElementById("searchPage").addEventListener("keypress", (event) => {
+        @* Dosen't Work as the ex above *@
+        @* const pageInput = document.getElementById("searchPage").value; *@
+        const pageInput = event.target.value;
+        const totalPages = @ViewBag.TotalPages;
+
+        if ((isNaN(pageInput) || pageInput < 1 || pageInput > totalPages) && event.key === "Enter") {
+            alert("Page not Found"); 
+            event.preventDefault(); 
+            return;
+        }
+
+        if (event.key === "Enter") {
+            window.location.replace(window.location.origin + `/Reservation?pageNumber=${pageInput}`)
+        }
+    });
+
+
+    document.getElementById("search").addEventListener("keypress", (event) => {
+        const pageCount = @ViewBag.RecordCounts;
+
+        if (pageCount <= 0 && event.key === "Enter") {
+            alert("Name not Found");
+            event.preventDefault();
+            return;
+        }
+
+        if (event.key === "Enter") {
+            @* console.log(event.target.value) *@
+            window.location.replace(window.location.origin + `/Reservation/Search?name=${event.target.value}`);
+        }
+    });
+</script>
+
+
+@* <script> *@
+@*     var totalPages = @Html.Raw(Json.Serialize(ViewBag.TotalPages)); *@
+@* </script> *@
